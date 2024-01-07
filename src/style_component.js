@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Main = styled.div`
   min-height: 100vh;
   margin: auto;
-  max-width: 720px;
+  max-width: 1020px;
   background-color: ${({ dark }) => dark && "#0f0f0f"};
   color: ${({ dark }) => dark && 'white'};
   padding: ${({ padding }) => padding || '16px'};
