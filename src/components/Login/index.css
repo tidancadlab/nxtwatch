@@ -1,0 +1,21 @@
+.logo{
+  align-self: center;
+  margin-bottom: 16px;
+}
+.gap-4{
+  gap: 16px;
+}
+.btn{
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.error_text{
+  color: red;
+  font-size: 18px;
+}
