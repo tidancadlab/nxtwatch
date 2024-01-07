@@ -1,0 +1,11 @@
+.title {
+  font-size: 16px !important;
+  margin-top: 12px;
+}
+.loader-container {
+  flex-grow: 1;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

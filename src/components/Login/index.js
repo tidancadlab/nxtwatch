@@ -53,7 +53,11 @@ class Login extends Component {
 
     render() {
         const { isError, errorMsg, showPassword, form } = this.state
-
+        if (Cookies.get('jwt_token')) {
+            const { history } = this.props
+            history.replace('/')
+            return false
+        }
         return (
             <Store.Consumer>
                 {value => {

@@ -1,5 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 * {
-  font-family: Roboto;
+  font-family: "Roboto", sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -12,4 +13,127 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.main_container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logout_btn {
+  border: 1px solid #3b82f6 !important;
+  color: #3b82f6 !important;
+  padding: 8px 16px;
+}
+.logo_link img {
+  margin: 0;
+}
+.theme_btn {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.junction_container {
+  flex-grow: 1;
+  flex-direction: row !important;
+  gap: 0px !important;
+}
+.link_container {
+  flex-direction: column;
+  align-items: flex-start !important;
+  padding-top: 16px !important;
+  gap: 4px !important;
+}
+.item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  text-align: start;
+}
+.link {
+  text-decoration: none;
+  align-self: stretch;
+  padding: 3px 16px;
+}
+.link p {
+  font-size: 14px;
+}
+.social_media {
+  gap: 16px !important;
+  padding: 12px;
+}
+.social_media p {
+  align-self: self-start;
+}
+.page {
+  flex-grow: 1;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  align-self: stretch;
+  max-height: calc(100vh - 66px);
+  overflow: auto;
+}
+.page_container {
+  padding: 8px;
+  align-self: stretch;
+  flex-grow: 1;
+}
+.active {
+  background-color: #f1f5f9;
+}
+.active-dark {
+  background-color: #475569;
+}
+.banner_btn {
+  border: 1px solid black !important;
+  border-radius: 0 !important;
+  font-weight: 500 !important;
+  font-size: 16px;
+  margin-top: 36px;
+}
+.search_btn {
+  padding: 8px 32px !important;
+  border-radius: 0px !important;
+}
+.card_details {
+  flex-direction: row !important;
+  gap: 8px !important;
+  padding: 8px !important;
+}
+.card_container {
+  padding: 16px !important;
+  flex-wrap: wrap;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  align-self: stretch !important;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px !important;
+  max-width: 450px !important;
+  width: 19%;
+  gap: 2px !important;
+}
+.card p {
+  font-weight: 400;
+  font-size: 12px;
+}
+.avatar {
+  align-self: flex-start !important;
+}
+.details_container {
+  align-items: flex-start !important;
+  gap: 4px !important;
+}
+.view_container {
+  flex-direction: row !important;
+  gap: 2px !important;
 }
