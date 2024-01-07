@@ -1,12 +1,14 @@
 import { Component } from "react";
-import { Main } from "../../style_component";
+import { Container, Main } from "../../style_component";
 
 
 class Home extends Component {
 
     render() {
         return (
-            <Main>Home</Main>
+            <Main>
+                <Container>Home</Container>
+            </Main>
         )
     }
 }
