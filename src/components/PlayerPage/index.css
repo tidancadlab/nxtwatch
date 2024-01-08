@@ -1,6 +1,6 @@
-.player{
-    width: 100%;
-    max-width: 640px;
+.player {
+  width: 100%;
+  max-width: 640px;
 }
 .like_btn {
   display: flex;
@@ -12,4 +12,20 @@
 }
 .profile_video {
   align-self: stretch;
+}
+.data_container .sm_view {
+  @media (max-width: 576px) {
+    flex-direction: column !important;
+    align-self: flex-start;
+    gap: 16px !important;
+
+    .self_start {
+      align-self: flex-start;
+    }
+  }
+}
+@media (min-width: 577px) {
+  .lg {
+    margin-left: 80px;
+  }
 }

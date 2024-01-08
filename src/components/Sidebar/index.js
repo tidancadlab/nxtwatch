@@ -5,8 +5,8 @@ import { SiYoutubegaming } from "react-icons/si";
 import { MdPlaylistAdd } from "react-icons/md";
 import { Container, Img, Item, ItemContainer, SideBar, Text } from "../../style_component";
 
-const Sidebar = ({ theme, location, ...path }) => {
-    return <SideBar bg={theme ? "#212121" : "white"}>
+const Sidebar = ({ theme, location, show, ...path }) => {
+    return <SideBar bg={theme ? "#212121" : "white"} show={show}>
         <ItemContainer className="link_container">
             <Link to='/' className={`${location.pathname === "/" &&(theme? "active-dark" : "active")} link`}>
                 <Item className="item" color={theme ? "white" : "black"}>

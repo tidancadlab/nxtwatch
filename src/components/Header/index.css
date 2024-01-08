@@ -1,0 +1,15 @@
+.popup-content {
+  max-width: 350px !important;
+  min-width: 300px !important;
+  padding: 32p;
+  border-radius: 16px;
+  background-color: transparent;
+  border: none;
+}
+.popup-container {
+  padding: 32px;
+  border-radius: 16px;
+}
+.out_btn {
+  display: flex;
+}

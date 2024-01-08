@@ -1,12 +1,13 @@
 import { Component } from "react";
 import Cookies from "js-cookie";
-import Loader from "react-loader-spinner";
 import { formatDistanceToNow } from 'date-fns'
 import { BsDot } from "react-icons/bs";
 import { AiFillFire } from "react-icons/ai";
-import { Button, Container, Heading, Img, Item, ItemContainer, Text } from "../../style_component";
+import { Container, Img, Item, ItemContainer, Text } from "../../style_component";
+import { BannerSmall, FailView, Loading } from "../Components.js";
 import Store from "../../store.js";
 import './index.css'
+import { Link } from "react-router-dom/cjs/react-router-dom.min.js";
 
 const statusCode = {
     initial: "INITIAL",
@@ -68,25 +69,30 @@ class Trending extends Component {
 
         if (fetchStatus === statusCode.pending) {
             return (
-                <div className="loader-container" data-testid="loader">
-                    <Loader type="ThreeDots" color={theme ? "#ffffff" : "black"} height="50" width="50" />
-                </div>
+                <Loading />
             )
         } else {
-            return (<ItemContainer className="card_container card_trending_container">
-                {videos.map(v => <Item key={v.id} className="trending_card">
-                    <Img width="300px" src={v.thumbnailUrl} alt="video thumbnail" />
-                    <Container className="trending_details">
-                        <Text className="title">{v.title}</Text>
-                        <Text color={theme ? "#606060" : "gray"}>{v.channel.name}</Text>
-                        <Container className="view_container" >
-                            <Text color={theme ? "#606060" : "gray"}>{v.viewCount} views</Text>
-                            <BsDot color={theme ? "#606060" : "gray"} />
-                            <Text color={theme ? "#606060" : "gray"}>{formatDistanceToNow(new Date(v.publishedAt))}</Text>
-                        </Container>
+            return (
+                <Container className="page" >
+                    <BannerSmall Icon={AiFillFire} title={"Trending"} />
+                    <Container className="page_container">
+                        <ItemContainer className="card_container card_trending_container">
+                            {videos.map(v => <Item key={v.id} className="trending_card">
+                                <Link to={`/videos/${v.id}`} ><Img height="166px" style={{ maxWidth: "unset" }} src={v.thumbnailUrl} alt="video thumbnail" /></Link>
+                                <Container className="trending_details">
+                                    <Text className="title">{v.title}</Text>
+                                    <Text color={theme ? "#606060" : "gray"}>{v.channel.name}</Text>
+                                    <Container className="view_container" >
+                                        <Text color={theme ? "#606060" : "gray"}>{v.viewCount} views</Text>
+                                        <BsDot color={theme ? "#606060" : "gray"} />
+                                        <Text color={theme ? "#606060" : "gray"}>{formatDistanceToNow(new Date(v.publishedAt))}</Text>
+                                    </Container>
+                                </Container>
+                            </Item>)}
+                        </ItemContainer>
                     </Container>
-                </Item>)}
-            </ItemContainer>)
+                </Container>
+            )
         }
     }
 
@@ -98,22 +104,7 @@ class Trending extends Component {
                     return (
                         <Container className="page" bg={!value.theme ? "#f9f9f9" : "#0f0f0f"} data-testid="trending">
                             {fetchStatus === statusCode.failed ?
-                                <Container className="noData" gap='16px'>
-                                    <Img width="300px" src={value.theme ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png" :
-                                        "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} alt="failure view" />
-                                    <Heading color={value.theme ? "white" : "black"}>Oops! Something Went Wrong</Heading>
-                                    <Text>We have some trouble to complete your request. please try again.</Text>
-                                    <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={this.onGetVideos}>Retry</Button>
-                                </Container> :
-                                <Container className="page" >
-                                    <Container className="trending_heading_container" bg={value.theme ? "black" : "#d7dfe9"} data-testid="banner">
-                                        <Container className="trending_heading_icon" bg={value.theme ? "#231f20" : "#cbd5e1"}><AiFillFire size={24} /></Container>
-                                        <Heading color={value.theme ? "white" : "black"}>Trending</Heading>
-                                    </Container>
-                                    <Container className="page_container">
-                                        {this.onSuccess(value)}
-                                    </Container>
-                                </Container>}
+                                <FailView onGetVideos={this.onGetVideos} /> : this.onSuccess(value)}
                         </Container>
                     )
                 }}

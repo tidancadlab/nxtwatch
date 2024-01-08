@@ -70,11 +70,21 @@ export const Button = styled.button`
   font-weight: 600;
   cursor: pointer;
   align-self: ${({ position }) => position || "flex-start"};
+  
 `;
 export const Text = styled.p`
   color: ${({ color }) => color};
   font-size: ${({ size }) => size};
   font-family: ${({ family }) => family};
+  @media (max-width: 768px) {
+    font-size: ${({ sm }) => sm && "12px"};
+  }
+  @media (max-width: 576px) {
+    display: ${({ sm_hide }) => sm_hide && 'none'} !important;
+  }
+  @media (min-width: 577px) {
+    display: ${({ lg_hide }) => lg_hide && 'none'} !important;
+  }
 `;
 export const ItemContainer = styled.ul`
   display: flex;
@@ -88,6 +98,12 @@ export const Item = styled.li`
   padding: 0;
   max-width: 600px;
   color: ${({ color }) => color};
+  @media (max-width: 576px) {
+    display: ${({ sm_hide }) => sm_hide && 'none'};
+  }
+  @media (min-width: 577px) {
+    display: ${({ lg_hide }) => lg_hide && 'none'};
+  }
 `;
 export const SideBar = styled.div`
   max-width: 160px;
@@ -101,7 +117,25 @@ export const SideBar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-self: stretch;
+  @media (max-width: 576px) {
+    position: absolute;
+    left: ${({ show }) => show ? "0px" : "-166px"};
+    top: 66px;
+    z-index: 10;
+    height: 100%;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+  } 
 `;
+export const Before = styled.div`
+  position: absolute;
+  width: ${({ show }) => show ? "100vw" : "0"};
+  height: ${({ show }) => show ? "calc(100vh - 66px)" : "0"};
+  top: 66px;
+  z-index: 9;
+  background-color: rgb(0,0,0,80%);
+  backdrop-filter: blur(2px);
+`
 export const BannerContainer = styled.div`
   background-image: url(${({ image }) => image});
   background-size: cover;
@@ -117,6 +151,7 @@ export const SearchInput = styled.input`
   background-color: transparent;
   color: ${({ color }) => color};
   min-width: 250px;
+  width: 100%;
 `;
 export const SearchField = styled.div`
   display: flex;
@@ -126,4 +161,7 @@ export const SearchField = styled.div`
   gap: 0 ;
   border: 1px solid ${({ borderColor }) => borderColor};
   align-self: flex-start;
+  @media (max-width: 576px) {
+    width: 100%;
+  } 
 `;

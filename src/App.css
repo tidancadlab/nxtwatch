@@ -122,6 +122,13 @@ body {
   max-width: 450px !important;
   width: calc(30% - 64px);
   gap: 0px !important;
+
+  @media (max-width: 576px) {
+    width: 47%;
+  }
+  @media (max-width: 440px) {
+    width: 100%;
+  }
 }
 .card p {
   font-weight: 400;

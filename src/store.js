@@ -6,10 +6,12 @@ const Store = React.createContext({
     dislikedVideoList: [],
     savedVideoList: [],
     isBannerShow: true,
+    showSidebar: false,
     onChangeTheme: () => { },
     onLike: () => { },
     onDislike: () => { },
     onSave: () => { },
     onBannerClose: () => { },
+    onShowSidebar: () => { },
 })
 export default Store

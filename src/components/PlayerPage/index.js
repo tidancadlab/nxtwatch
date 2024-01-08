@@ -1,13 +1,13 @@
 import { Component } from "react";
 import Cookies from "js-cookie";
-import Loader from "react-loader-spinner";
 import ReactPlayer from 'react-player/lazy'
 import { BsDot } from "react-icons/bs";
 import { formatDistanceToNow } from "date-fns";
 import { MdPlaylistAdd } from "react-icons/md";
 import { BiDislike, BiLike } from "react-icons/bi";
-import { Button, Container, Heading, Img, Item, ItemContainer, Text } from "../../style_component";
+import { Button, Container, Img, Item, ItemContainer, Text } from "../../style_component";
 import Store from "../../store.js";
+import { FailView, Loading } from '../Components.js'
 import './index.css'
 
 const statusCode = {
@@ -79,15 +79,15 @@ class Trending extends Component {
 
         if (fetchStatus === statusCode.success) {
             return (
-                <Container className="player" >
+                <Container className="player" gap="16px" >
                     <ReactPlayer light url={videos.videoUrl} controls width="100%" playing />
                     <Container align="stretch" gap="16px" className="data_container">
                         <Text>{videos.title}</Text>
-                        <Container className="view_container" row justify="space-between">
-                            <Container row>
-                                <Text color={theme ? "#606060" : "gray"}>{videos.viewCount}</Text>
-                                <BsDot color={theme ? "#606060" : "gray"} />
-                                <Text color={theme ? "#606060" : "gray"}>{formatDistanceToNow(new Date(videos.publishedAt))}</Text>
+                        <Container className="view_container sm_view" row justify="space-between">
+                            <Container row style={{ fontSize: 14 }} className="self_start">
+                                <Text color={"#64748b"}>{videos.viewCount} views</Text>
+                                <BsDot color={"#64748b"} />
+                                <Text color={"#64748b"}>{formatDistanceToNow(new Date(videos.publishedAt))}</Text>
                             </Container>
                             <ItemContainer>
                                 <Item>
@@ -121,25 +121,22 @@ class Trending extends Component {
                         </Container>
                         <hr />
                     </Container>
-                    <Container justify="flex-start" className="profile_video data_container" row >
+                    <Container justify="flex-start" className="profile_video data_container" row gap="16px" >
                         <Container>
                             <Img width="64px" src={videos.channel.profileImageUrl} />
                         </Container>
-                        <Container align="flex-start">
+                        <Container align="flex-start" style={{ fontSize: 14 }}>
                             <Text>{videos.channel.name}</Text>
                             <Text>{videos.channel.subscriberCount} Subscriber</Text>
-                            <Text>{videos.description}</Text>
-
                         </Container>
                     </Container>
+                    <Text className="lg">{videos.description}</Text>
                 </Container>
 
             )
         } else {
             return (
-                <div className="loader-container" data-testid="loader">
-                    <Loader type="ThreeDots" color={theme ? "#ffffff" : "black"} height="50" width="50" />
-                </div>
+                <Loading />
             )
         }
     }
@@ -153,13 +150,7 @@ class Trending extends Component {
                         <Container className="page" bg={!value.theme ? "#f9f9f9" : "#0f0f0f"} data-testid="videoItemDetails">
                             {
                                 fetchStatus === statusCode.failed ? (
-                                    <Container className="noData" gap='16px'>
-                                        <Img width="300px" src={value.theme ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png" :
-                                            "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} />
-                                        <Heading color={value.theme ? "white" : "black"}>Oops! Something Went Wrong</Heading>
-                                        <Text>We have some trouble to complete your request. please try again.</Text>
-                                        <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={this.onGetVideos}>Retry</Button>
-                                    </Container>
+                                    <FailView onGetVideos={this.onGetVideos} />
                                 ) : (
                                     <Container className="page_container">{this.onSuccess(value)}</Container>
                                 )

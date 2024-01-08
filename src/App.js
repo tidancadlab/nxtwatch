@@ -9,13 +9,16 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/index.js';
 import Store from './store.js';
+import { NotFound } from './components/Components.js';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min.js';
 
 class App extends Component {
   state = {
     theme: false, likedVideoList: [],
     dislikedVideoList: [],
     savedVideoList: [],
-    isBannerShow: true
+    isBannerShow: true,
+    showSidebar: false
   }
 
   onChangeTheme = () => {
@@ -75,18 +78,23 @@ class App extends Component {
   onBannerClose = () => {
     this.setState({ isBannerShow: false })
   }
+  onShowSidebar = () => {
+    this.setState(previous => ({ showSidebar: !previous.showSidebar }))
+  }
 
   render() {
-    const { onChangeTheme, state, onLike, onDislike, onSave, onBannerClose } = this
+    const { onChangeTheme, state, onLike, onDislike, onSave, onBannerClose, onShowSidebar } = this
     return (
-      <Store.Provider value={{ ...state, onChangeTheme, onLike, onDislike, onSave, onBannerClose }}>
+      <Store.Provider value={{ ...state, onChangeTheme, onLike, onDislike, onSave, onBannerClose, onShowSidebar }}>
         <Switch>
           < Route exact path="/login" component={Login} />
           <ProtectedRoute exact path="/" component={Home} />
           <ProtectedRoute exact path="/trending" component={Trending} />
           <ProtectedRoute exact path="/gaming" component={Gaming} />
           <ProtectedRoute exact path="/saved-videos" component={SaveVideo} />
-          <ProtectedRoute exact path="/saved-videos/:id" component={PlayerPage} />
+          <ProtectedRoute exact path="/videos/:id" component={PlayerPage} />
+          <ProtectedRoute exact path="/not-found" component={NotFound} />
+          <Redirect to="/not-found" />
         </Switch>
       </Store.Provider>
     )

@@ -1,12 +1,11 @@
 import { Component } from "react";
-import { BsDot, BsSearch } from "react-icons/bs";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom/cjs/react-router-dom.min.js";
 import { formatDistanceToNow } from 'date-fns'
+import { BsDot, BsSearch } from "react-icons/bs";
 import { Button, Container, Heading, Img, Item, ItemContainer, SearchField, SearchInput, Text } from "../../style_component";
 import Store from "../../store.js";
-import Banner from "../Component/Banner.js";
-import Loader from "react-loader-spinner";
-import { Link } from "react-router-dom/cjs/react-router-dom.min.js";
+import { FailView, Loading, Banner } from "../Components.js";
 
 const statusCode = {
     initial: "INITIAL",
@@ -69,13 +68,7 @@ class Home extends Component {
 
         if (fetchStatus === statusCode.failed) {
             return (
-                <Container className="noData" gap='16px'>
-                    <Img width="300px" src={theme ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png" :
-                        "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} alt="failure view" />
-                    <Heading color={theme ? "white" : "black"}>Oops! Something Went Wrong</Heading>
-                    <Text>We have some trouble to complete your request. please try again.</Text>
-                    <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={this.onGetVideos}>Retry</Button>
-                </Container>
+                <FailView onGetVideos={this.onGetVideos} />
             )
         } else {
             return (
@@ -89,7 +82,7 @@ class Home extends Component {
                         }}>Retry</Button>
                     </Container> : <ItemContainer className="card_container">
                         {videos.map(v => <Item key={v.id} className="card">
-                            <Link to={`/saved-videos/` + v.id} >
+                            <Link to={`/videos/` + v.id} >
                                 <Img width="100%" src={v.thumbnailUrl} alt="video thumbnail" />
                             </Link>
                             <Container className="card_details">
@@ -131,9 +124,7 @@ class Home extends Component {
                                         <BsSearch />
                                     </Button>
                                 </SearchField>
-                                {fetchStatus === statusCode.pending ? <div className="loader-container" data-testid="loader">
-                                    <Loader type="ThreeDots" color={value.theme ? "#ffffff" : "black"} height="50" width="50" />
-                                </div> : this.onSuccess(value)}
+                                {fetchStatus === statusCode.pending ? <Loading /> : this.onSuccess(value)}
                             </Container>
                         </Container>
                     )

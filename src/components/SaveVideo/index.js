@@ -30,8 +30,8 @@ class SavedVideos extends Component {
                                     <Container className="page_container">
                                         <ItemContainer className="card_container card_trending_container">
                                             {savedVideoList.map(v => <Item key={v.id} className="trending_card">
-                                                <Link to={`/saved-videos/${v.id}`}>
-                                                    <Img style={{ maxWidth: "unset" }} height="166px" src={v.thumbnailUrl} alt="channel logo" />
+                                                <Link to={`/videos/${v.id}`}>
+                                                    <Img style={{ maxWidth: "unset", maxWidth: 300 }} className="w-full" src={v.thumbnailUrl} alt="channel logo" />
                                                 </Link>
                                                 <Container className="trending_details">
                                                     <Text className="title">{v.title}</Text>
