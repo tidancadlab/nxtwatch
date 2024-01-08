@@ -11,15 +11,75 @@ import ProtectedRoute from './components/ProtectedRoute/index.js';
 import Store from './store.js';
 
 class App extends Component {
-  state = { theme: false }
+  state = {
+    theme: false, likedVideoList: [],
+    dislikedVideoList: [],
+    savedVideoList: [],
+    isBannerShow: true
+  }
 
   onChangeTheme = () => {
     this.setState(previous => ({ theme: !previous.theme }))
   }
+
+  onLike = id => {
+    const { dislikedVideoList, likedVideoList } = this.state
+    if (likedVideoList.includes(id)) {
+      this.setState(previous => ({
+        likedVideoList: previous.likedVideoList.filter(value => value !== id),
+      }))
+    } else {
+      if (dislikedVideoList.includes(id)) {
+        this.setState(previous => ({
+          dislikedVideoList: previous.dislikedVideoList.filter(value => value !== id),
+          likedVideoList: [...previous.likedVideoList, id]
+        }))
+      } else {
+        this.setState(previous => ({
+          likedVideoList: [...previous.likedVideoList, id]
+        }))
+      }
+    }
+  };
+
+  onDislike = id => {
+    const { dislikedVideoList, likedVideoList } = this.state
+    if (dislikedVideoList.includes(id)) {
+      this.setState(previous => ({
+        dislikedVideoList: previous.dislikedVideoList.filter(value => value !== id),
+      }))
+    } else {
+      if (likedVideoList.includes(id)) {
+        this.setState(previous => ({
+          likedVideoList: previous.likedVideoList.filter(value => value !== id),
+          dislikedVideoList: [...previous.dislikedVideoList, id]
+        }))
+      } else {
+        this.setState(previous => ({
+          dislikedVideoList: [...previous.dislikedVideoList, id]
+        }))
+      }
+    }
+  };
+
+  onSave = video => {
+    const { savedVideoList } = this.state
+    const isSaved = savedVideoList.filter(value => value.id === video.id)
+    if (isSaved.length <= 0) {
+      this.setState(previous => ({ savedVideoList: [...previous.savedVideoList, video] }))
+    } else {
+      this.setState(previous => ({ savedVideoList: previous.savedVideoList.filter(value => value.id !== video.id) }))
+    }
+  };
+
+  onBannerClose = () => {
+    this.setState({ isBannerShow: false })
+  }
+
   render() {
-    const { onChangeTheme, state } = this
+    const { onChangeTheme, state, onLike, onDislike, onSave, onBannerClose } = this
     return (
-      <Store.Provider value={{ ...state, onChangeTheme }}>
+      <Store.Provider value={{ ...state, onChangeTheme, onLike, onDislike, onSave, onBannerClose }}>
         <Switch>
           < Route exact path="/login" component={Login} />
           <ProtectedRoute exact path="/" component={Home} />

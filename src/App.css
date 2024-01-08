@@ -109,7 +109,7 @@ body {
   padding: 8px !important;
 }
 .card_container {
-  padding: 16px !important;
+  padding: 16px 0 !important;
   flex-wrap: wrap;
   align-items: flex-start !important;
   justify-content: flex-start !important;
@@ -118,10 +118,10 @@ body {
 .card {
   display: flex;
   flex-direction: column;
-  min-width: 150px !important;
+  min-width: 200px !important;
   max-width: 450px !important;
-  width: 19%;
-  gap: 2px !important;
+  width: calc(30% - 64px);
+  gap: 0px !important;
 }
 .card p {
   font-weight: 400;

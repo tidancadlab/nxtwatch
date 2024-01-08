@@ -1,3 +1,7 @@
+.player{
+    width: 100%;
+    max-width: 640px;
+}
 .like_btn {
   display: flex;
   gap: 8px;
@@ -5,11 +9,7 @@
 }
 .data_container {
   width: 100%;
-  max-width: 650px;
 }
 .profile_video {
   align-self: stretch;
-}
-.player{
-    width: 100%;
 }

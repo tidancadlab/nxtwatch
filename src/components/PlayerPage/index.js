@@ -69,11 +69,20 @@ class Trending extends Component {
         }
     }
 
-    onSuccess = ({ theme }) => {
+    onSuccess = ({ theme,
+        likedVideoList,
+        dislikedVideoList,
+        savedVideoList,
+        onLike,
+        onDislike,
+        onSave
+    }) => {
         const { fetchStatus, videos } = this.state
+        const isLiked = likedVideoList.includes(videos.id)
+        const isDisliked = dislikedVideoList.includes(videos.id)
+        const isSaved = savedVideoList.filter(value => value.id === videos.id).length > 0
+
         if (fetchStatus === statusCode.success) {
-            console.log(fetchStatus)
-            console.log(videos)
             return (
                 <Container className="player" >
                     <ReactPlayer light url={videos.videoUrl} controls width="100%" playing />
@@ -87,19 +96,28 @@ class Trending extends Component {
                             </Container>
                             <ItemContainer>
                                 <Item>
-                                    <Button className="like_btn">
+                                    <Button
+                                        onClick={() => onLike(videos.id)}
+                                        className="like_btn"
+                                        color={!isLiked ? "gray" : theme ? "white" : "black"}>
                                         <BiLike />
                                         <Text>Like</Text>
                                     </Button>
                                 </Item>
                                 <Item>
-                                    <Button className="like_btn">
+                                    <Button
+                                        onClick={() => onDislike(videos.id)}
+                                        className="like_btn"
+                                        color={!isDisliked ? "gray" : theme ? "white" : "black"}>
                                         <BiDislike />
                                         <Text>Dislike</Text>
                                     </Button>
                                 </Item>
                                 <Item>
-                                    <Button className="like_btn">
+                                    <Button
+                                        onClick={() => onSave(videos)}
+                                        className="like_btn"
+                                        color={!isSaved ? "gray" : theme ? "white" : "black"}>
                                         <MdPlaylistAdd />
                                         <Text>Save</Text>
                                     </Button>
