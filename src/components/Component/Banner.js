@@ -6,6 +6,7 @@ const Banner = ({ onBannerClose }) =>
         <BannerContainer
             image="https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png"
             style={{ position: "relative" }}
+            data-testid="banner"
         >
             <Img height="25%" src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" alt="nxt watch logo" />
             <Text color="black" size='20px'>Buy Nxt Watch Premium prepaid plans with UPI</Text>

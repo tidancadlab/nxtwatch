@@ -1,6 +1,6 @@
 import { Link, withRouter } from "react-router-dom";
 import { IoMdMoon } from "react-icons/io";
-import { BsSun } from "react-icons/bs";
+import { FiSun } from "react-icons/fi";
 import { Button, Img, Item, ItemContainer, Nav } from "../../style_component";
 import Cookies from "js-cookie";
 
@@ -13,12 +13,16 @@ const Header = ({ theme, onChangeTheme, history }) => (
                 src={theme ?
                     "https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png" :
                     "https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"}
-                alt=""
+                alt="website logo"
             />
         </Link>
         <ItemContainer>
             <Item>
-                <Button className="theme_btn" onClick={onChangeTheme} >{!theme ? <IoMdMoon color="black" /> : <BsSun color="white" />}</Button>
+                <Button
+                    className="theme_btn"
+                    onClick={onChangeTheme}
+                    data-testid="theme"
+                >{!theme ? <IoMdMoon color="black" /> : <FiSun color="white" />}</Button>
             </Item>
             <Item>
                 <Button className="theme_btn"><Img height="28px" src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png" alt="profile" /></Button>

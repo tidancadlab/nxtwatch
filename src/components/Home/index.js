@@ -71,7 +71,7 @@ class Home extends Component {
             return (
                 <Container className="noData" gap='16px'>
                     <Img width="300px" src={theme ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png" :
-                        "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} />
+                        "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} alt="failure view" />
                     <Heading color={theme ? "white" : "black"}>Oops! Something Went Wrong</Heading>
                     <Text>We have some trouble to complete your request. please try again.</Text>
                     <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={this.onGetVideos}>Retry</Button>
@@ -81,7 +81,7 @@ class Home extends Component {
             return (
                 videos.length <= 0 ?
                     <Container className="noData" gap='16px'>
-                        <Img width="300px" src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png" />
+                        <Img width="300px" src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png" alt="not found" />
                         <Heading color={theme ? "white" : "black"}>No Search result found</Heading>
                         <Text>Try different key words or remove search filter</Text>
                         <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={() => {
@@ -89,9 +89,11 @@ class Home extends Component {
                         }}>Retry</Button>
                     </Container> : <ItemContainer className="card_container">
                         {videos.map(v => <Item key={v.id} className="card">
-                            <Link to={`/saved-videos/` + v.id} ><Img width="100%" src={v.thumbnailUrl} alt={v.title} /></Link>
+                            <Link to={`/saved-videos/` + v.id} >
+                                <Img width="100%" src={v.thumbnailUrl} alt="video thumbnail" />
+                            </Link>
                             <Container className="card_details">
-                                <Img className="avatar" width="24px" src={v.channel.profileImageUrl} alt="" />
+                                <Img className="avatar" width="24px" src={v.channel.profileImageUrl} alt="channel logo" />
                                 <Container className="details_container">
                                     <Text>{v.title}</Text>
                                     <Text color={theme ? "#606060" : "gray"}>{v.channel.name}</Text>
@@ -119,7 +121,15 @@ class Home extends Component {
                             <Container className="page_container">
                                 <SearchField borderColor={value.theme ? "#909090" : "#cccccc"}>
                                     <SearchInput type="search" color={value.theme ? "white" : "black"} onChange={this.onSearchInput} placeholder="Search" value={searchText} />
-                                    <Button onClick={this.onGetVideos} className="btn search_btn" bg={!value.theme ? "#f4f4f4" : "#231f20"} color={value.theme ? "#f9f9f9" : "#181818"}><BsSearch /></Button>
+                                    <Button
+                                        onClick={this.onGetVideos}
+                                        className="btn search_btn"
+                                        bg={!value.theme ? "#f4f4f4" : "#231f20"}
+                                        color={value.theme ? "#f9f9f9" : "#181818"}
+                                        data-testid="searchButton"
+                                    >
+                                        <BsSearch />
+                                    </Button>
                                 </SearchField>
                                 {fetchStatus === statusCode.pending ? <div className="loader-container" data-testid="loader">
                                     <Loader type="ThreeDots" color={value.theme ? "#ffffff" : "black"} height="50" width="50" />

@@ -1,14 +1,14 @@
 import { Component } from "react";
-import ReactPlayer from 'react-player/lazy'
-import { BiDislike, BiLike } from "react-icons/bi";
 import Cookies from "js-cookie";
 import Loader from "react-loader-spinner";
-import { Button, Container, Heading, Img, Item, ItemContainer, Text } from "../../style_component";
-import Store from "../../store.js";
-import './index.css'
+import ReactPlayer from 'react-player/lazy'
 import { BsDot } from "react-icons/bs";
 import { formatDistanceToNow } from "date-fns";
 import { MdPlaylistAdd } from "react-icons/md";
+import { BiDislike, BiLike } from "react-icons/bi";
+import { Button, Container, Heading, Img, Item, ItemContainer, Text } from "../../style_component";
+import Store from "../../store.js";
+import './index.css'
 
 const statusCode = {
     initial: "INITIAL",
@@ -18,18 +18,31 @@ const statusCode = {
     error: false,
     rejected: "REJECTED"
 }
+const videoList = (data) => ({
+    "id": data.id,
+    "title": data.title,
+    "thumbnailUrl": data.thumbnail_url,
+    "viewCount": data.view_count,
+    "videoUrl": data.video_url,
+    "channel": {
+        "name": data.channel.name,
+        "profileImageUrl": data.channel.profile_image_url,
+        "subscriberCount": data.channel.subscriber_count
+    },
+    "publishedAt": data.published_at,
+    "description": data.description
+})
 
 class Trending extends Component {
-    state = { isError: statusCode.error, errorMsg: '', fetchStatus: statusCode.initial, videos: [] }
+    state = { fetchStatus: statusCode.initial, videos: [] }
 
     componentDidMount() {
         this.onGetVideos()
     }
 
     onGetVideos = async (e) => {
-        this.setState({ fetchStatus: statusCode.pending, isError: statusCode.error, errorMsg: '' })
+        this.setState({ fetchStatus: statusCode.pending })
         const { match } = this.props
-
         try {
             const jwtToken = Cookies.get("jwt_token")
             const url = `https://apis.ccbp.in/videos/${match.params.id}`
@@ -40,32 +53,14 @@ class Trending extends Component {
             })
             if (response.ok) {
                 const { video_details } = await response.json()
-
-                const videoList = (data) => ({
-                    "id": data.id,
-                    "title": data.title,
-                    "thumbnailUrl": data.thumbnail_url,
-                    "viewCount": data.view_count,
-                    "videoUrl": data.video_url,
-                    "channel": {
-                        "name": data.channel.name,
-                        "profileImageUrl": data.channel.profile_image_url,
-                        "subscriberCount": data.channel.subscriber_count
-                    },
-                    "publishedAt": data.published_at,
-                    "description": data.description
-                })
-
                 this.setState({ videos: videoList(video_details), fetchStatus: statusCode.success })
             } else {
-                const { error_msg } = await response.json()
                 this.setState({
-                    fetchStatus: statusCode.failed, isError: true, errorMsg: error_msg
+                    fetchStatus: statusCode.failed
                 })
             }
-
         } catch (error) {
-            this.setState({ fetchStatus: statusCode.failed, isError: true, errorMsg: 'Something Went Wrong' })
+            this.setState({ fetchStatus: statusCode.failed })
         }
     }
 
@@ -99,7 +94,7 @@ class Trending extends Component {
                                     <Button
                                         onClick={() => onLike(videos.id)}
                                         className="like_btn"
-                                        color={!isLiked ? "gray" : theme ? "white" : "black"}>
+                                        color={!isLiked ? "#64748b" : "#2563eb"}>
                                         <BiLike />
                                         <Text>Like</Text>
                                     </Button>
@@ -108,7 +103,7 @@ class Trending extends Component {
                                     <Button
                                         onClick={() => onDislike(videos.id)}
                                         className="like_btn"
-                                        color={!isDisliked ? "gray" : theme ? "white" : "black"}>
+                                        color={!isDisliked ? "#64748b" : "#2563eb"}>
                                         <BiDislike />
                                         <Text>Dislike</Text>
                                     </Button>
@@ -117,7 +112,7 @@ class Trending extends Component {
                                     <Button
                                         onClick={() => onSave(videos)}
                                         className="like_btn"
-                                        color={!isSaved ? "gray" : theme ? "white" : "black"}>
+                                        color={!isSaved ? "#64748b" : "#2563eb"}>
                                         <MdPlaylistAdd />
                                         <Text>Save</Text>
                                     </Button>
@@ -146,7 +141,6 @@ class Trending extends Component {
                     <Loader type="ThreeDots" color={theme ? "#ffffff" : "black"} height="50" width="50" />
                 </div>
             )
-
         }
     }
 
@@ -156,15 +150,21 @@ class Trending extends Component {
             <Store.Consumer>
                 {value => {
                     return (
-                        fetchStatus === statusCode.failed ? (<Container className="noData" gap='16px'>
-                            <Img width="300px" src={value.theme ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png" :
-                                "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} />
-                            <Heading color={value.theme ? "white" : "black"}>Oops! Something Went Wrong</Heading>
-                            <Text>We have some trouble to complete your request. please try again.</Text>
-                            <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={this.onGetVideos}>Retry</Button>
-                        </Container>) : (<Container className="page" bg={!value.theme ? "#f9f9f9" : "#0f0f0f"} data-testid="gaming">
-                            <Container className="page_container">{this.onSuccess(value)}</Container>
-                        </Container>)
+                        <Container className="page" bg={!value.theme ? "#f9f9f9" : "#0f0f0f"} data-testid="videoItemDetails">
+                            {
+                                fetchStatus === statusCode.failed ? (
+                                    <Container className="noData" gap='16px'>
+                                        <Img width="300px" src={value.theme ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png" :
+                                            "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"} />
+                                        <Heading color={value.theme ? "white" : "black"}>Oops! Something Went Wrong</Heading>
+                                        <Text>We have some trouble to complete your request. please try again.</Text>
+                                        <Button className="btn search_btn" bg='#4f46e5' color="white" position="center" onClick={this.onGetVideos}>Retry</Button>
+                                    </Container>
+                                ) : (
+                                    <Container className="page_container">{this.onSuccess(value)}</Container>
+                                )
+                            }
+                        </Container>
                     )
                 }}
             </Store.Consumer>

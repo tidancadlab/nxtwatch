@@ -1,21 +1,20 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import { formatDistanceToNow } from 'date-fns'
 import { BsDot } from "react-icons/bs";
 import { AiFillFire } from "react-icons/ai";
 import { Container, Heading, Img, Item, ItemContainer, Text } from "../../style_component";
 import Store from "../../store.js";
 import './index.css'
-import { Link } from "react-router-dom/cjs/react-router-dom.min.js";
 
 class SavedVideos extends Component {
 
     render() {
-        const { match } = this.props
         return (
             <Store.Consumer>
                 {value => {
                     const { theme, savedVideoList } = value
-                    return (    
+                    return (
                         <Container style={{ flexGrow: 1, alignSelf: "stretch" }} data-testid="savedVideos" bg={!theme ? "#f9f9f9" : "#0f0f0f"}>
                             {savedVideoList.length <= 0 ?
                                 <Container style={{ alignSelf: "stretch" }} className="noData" gap='16px'>
@@ -24,7 +23,7 @@ class SavedVideos extends Component {
                                     <Text>You can save your video while watching them</Text>
                                 </Container> :
                                 <Container className="page">
-                                    <Container className="trending_heading_container" bg={theme ? "black" : "#d7dfe9"}>
+                                    <Container className="trending_heading_container" bg={theme ? "black" : "#d7dfe9"} data-testid="banner">
                                         <Container className="trending_heading_icon" bg={theme ? "#231f20" : "#cbd5e1"}><AiFillFire size={24} /></Container>
                                         <Heading color={theme ? "white" : "black"}>Saved Videos</Heading>
                                     </Container>
@@ -32,7 +31,7 @@ class SavedVideos extends Component {
                                         <ItemContainer className="card_container card_trending_container">
                                             {savedVideoList.map(v => <Item key={v.id} className="trending_card">
                                                 <Link to={`/saved-videos/${v.id}`}>
-                                                    <Img style={{ maxWidth: "unset" }} height="166px" src={v.thumbnailUrl} alt={v.title} />
+                                                    <Img style={{ maxWidth: "unset" }} height="166px" src={v.thumbnailUrl} alt="channel logo" />
                                                 </Link>
                                                 <Container className="trending_details">
                                                     <Text className="title">{v.title}</Text>
