@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Main = styled.div`
   min-height: 100vh;
   margin: auto;
-  max-width: 1920px;
+  max-width: 1200px;
   background-color: ${({ dark }) => dark && "#0f0f0f"};
   color: ${({ dark }) => dark && 'white'};
   padding: ${({ padding }) => padding || '16px'};
@@ -20,7 +20,6 @@ export const Img = styled.img`
 `;
 
 export const Heading = styled.h1`
-  color: ${({ color }) => color ? color : "#334155"};
 `;
 export const Container = styled.div`
   display: flex;
@@ -114,7 +113,7 @@ export const BannerContainer = styled.div`
 export const SearchInput = styled.input`
   outline: none;
   border: none;
-  padding: 4px;
+  padding: 4px 8px;
   background-color: transparent;
   color: ${({ color }) => color};
   min-width: 250px;

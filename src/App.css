@@ -84,6 +84,7 @@ body {
   padding: 8px;
   align-self: stretch;
   flex-grow: 1;
+  justify-content: flex-start !important;
 }
 .active {
   background-color: #f1f5f9;
@@ -136,4 +137,11 @@ body {
 .view_container {
   flex-direction: row !important;
   gap: 2px !important;
+}
+.search_btn {
+  padding: 8px 32px !important;
+  border-radius: 4px !important;
+}
+.noData {
+  flex-grow: 1;
 }

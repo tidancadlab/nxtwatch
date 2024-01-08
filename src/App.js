@@ -4,6 +4,7 @@ import Home from './components/Home/index.js';
 import Trending from './components/Trending/index.js';
 import Gaming from './components/Gaming/index.js';
 import SaveVideo from './components/SaveVideo/index.js';
+import PlayerPage from './components/PlayerPage';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/index.js';
@@ -25,6 +26,7 @@ class App extends Component {
           <ProtectedRoute exact path="/trending" component={Trending} />
           <ProtectedRoute exact path="/gaming" component={Gaming} />
           <ProtectedRoute exact path="/saved-videos" component={SaveVideo} />
+          <ProtectedRoute exact path="/saved-videos/:id" component={PlayerPage} />
         </Switch>
       </Store.Provider>
     )
